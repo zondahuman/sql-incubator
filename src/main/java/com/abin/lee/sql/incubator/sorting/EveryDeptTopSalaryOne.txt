@@ -18,37 +18,22 @@ INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('lee3', 2
 
 select * from department a inner join (select max(salary) as salary, depart_id as depart_id from department group by depart_id) b on a.salary = b.salary and a.depart_id=b.depart_id;
 
+SELECT
+	*
+FROM
+	department a
+	INNER JOIN ( SELECT max( salary ) AS salary, depart_id AS depart_id FROM department GROUP BY depart_id ) b ON a.salary = b.salary
+	AND a.depart_id = b.depart_id;
+
+
+
+
 http://blog.csdn.net/s77108887/article/details/16803057
 
 
 
 
 
-查出每个部门工资最高的前三位员工的信息
-
-create table employee(
-id int primary key auto_increment not null,
-dept_id int,
-salary decimal(10, 2)
-);
-
-
-create table dept(
-id int primary key auto_increment not null,
-name varchar(50)
-);
-
-
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (1, 1, 3000.00);
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (2, 1, 3500.00);
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (3, 1, 4000.00);
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (4, 2, 5000.00);
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (5, 2, 6000.00);
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (6, 2, 8000.00);
-
-
-INSERT INTO `deal`.`dept`(`id`, `name`) VALUES (1, '开发部');
-INSERT INTO `deal`.`dept`(`id`, `name`) VALUES (2, '运营部');
 
 
 

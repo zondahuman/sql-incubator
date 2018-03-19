@@ -1,29 +1,4 @@
 
-用一个SQL语句选出每个部门工资最高的员工
-
-create table department(
-id int primary key auto_increment not null ,
-name varchar(50),
-depart_id int,
-salary decimal(10, 2)
-);
-
-INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('abin1', 1, 100.00);
-INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('abin2', 1, 200.00);
-INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('abin3', 1, 300.00);
-
-INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('lee1', 2, 500.00);
-INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('lee2', 2, 700.00);
-INSERT INTO `deal`.`department`(`name`, `depart_id`, `salary`) VALUES ('lee3', 2, 600.00);
-
-select * from department a inner join (select max(salary) as salary, depart_id as depart_id from department group by depart_id) b on a.salary = b.salary and a.depart_id=b.depart_id;
-
-http://blog.csdn.net/s77108887/article/details/16803057
-
-
-
-
-
 查出每个部门工资最高的前三位员工的信息
 
 create table employee(
@@ -42,9 +17,12 @@ name varchar(50)
 INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (1, 1, 3000.00);
 INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (2, 1, 3500.00);
 INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (3, 1, 4000.00);
-INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (4, 2, 5000.00);
+INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (4, 1, 4500.00);
+
 INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (5, 2, 6000.00);
 INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (6, 2, 8000.00);
+INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (7, 2, 9000.00);
+INSERT INTO `deal`.`employee`(`id`, `dept_id`, `salary`) VALUES (8, 2, 10000.00);
 
 
 INSERT INTO `deal`.`dept`(`id`, `name`) VALUES (1, '开发部');
@@ -54,6 +32,41 @@ INSERT INTO `deal`.`dept`(`id`, `name`) VALUES (2, '运营部');
 
 
 
+
+
+
+select e1.dept_id,d.name,e1.salary
+    from employee e1
+    left join dept d on e1.dept_id=d.id
+where
+   (
+    select count(1)
+    from employee e2
+    where e2.dept_id=e1.dept_id and e2.salary>=e1.salary
+   ) <=3 /*这里的数值表示你想取前几名*/
+
+order by dept_id, salary desc;
+
+
+SELECT
+	e1.dept_id,
+	d.NAME,
+	e1.salary
+FROM
+	employee e1
+	LEFT JOIN dept d ON e1.dept_id = d.id
+WHERE
+	( SELECT count( 1 ) FROM employee e2 WHERE e2.dept_id = e1.dept_id AND e2.salary >= e1.salary ) <= 3 /*这里的数值表示你想取前几名*/
+
+ORDER BY
+	dept_id,
+	salary DESC;
+
+
+	
+
+
+https://segmentfault.com/q/1010000002613925
 
 
 
