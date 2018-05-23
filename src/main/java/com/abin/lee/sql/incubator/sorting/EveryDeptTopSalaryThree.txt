@@ -55,7 +55,23 @@ ORDER BY
 	salary DESC;
 
 
-	
+SELECT
+	a.id,
+	a.dept_id,
+	a.salary
+FROM
+	employee a
+	LEFT JOIN employee b ON a.dept_id = b.dept_id
+	AND a.salary < b.salary
+GROUP BY
+	a.id,
+	a.dept_id,
+	a.salary
+HAVING
+	count( b.id ) < 3
+ORDER BY
+	a.dept_id,
+	a.salary;
 
 
 https://segmentfault.com/q/1010000002613925
