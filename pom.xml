@@ -10,13 +10,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>sql-compose</module>
-        <module>sql-parser</module>
+        <module>sql-parse</module>
         <module>sql-common</module>
     </modules>
 
 
     <properties>
-        <mybatis.version>3.2.7</mybatis.version>
         <jackson.version>2.8.0</jackson.version>
         <servlet-api.version>2.5</servlet-api.version>
         <asm.version>3.3</asm.version>
