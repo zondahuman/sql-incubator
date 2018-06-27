@@ -1,9 +1,5 @@
 package com.abin.lee.sql.parser.jsqlparser;
 
-/**
- * Created by abin on 2018/6/27.
- */
-
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
@@ -22,7 +18,10 @@ import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Created by abin on 2018/6/27.
+ * https://blog.csdn.net/u014297722/article/details/53256533
+ */
 public class Prasing_Test {
     public static void main(String[] args) throws JSQLParserException {
         String sql = "select id,name from user where id=5 and name='lee'";
