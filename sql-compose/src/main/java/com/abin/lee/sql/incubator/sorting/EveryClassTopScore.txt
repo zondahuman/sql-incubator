@@ -1,0 +1,43 @@
+
+drop table student;
+create table student(
+	id varchar(20),-- 编号
+	class varchar(20),-- 年级
+	score int-- 分数
+);
+
+
+
+delete from student;
+insert student values('1','一年级',82);
+insert student values('2','一年级',95);
+insert student values('3','一年级',82);
+insert student values('4','一年级',40);
+insert student values('5','一年级',20);
+insert student values('6','二年级',95);
+insert student values('7','二年级',40);
+insert student values('8','二年级',3);
+insert student values('9','二年级',60);
+insert student values('10','二年级',10);
+insert student values('11','三年级',70);
+insert student values('12','三年级',60);
+insert student values('13','三年级',40);
+insert student values('14','三年级',90);
+insert student values('15','三年级',20);
+
+
+3、查询每个班级的前三名
+select a.class,a.score
+from student a
+where (select count(*) from student where class=a.class and a.score<score)<3
+order by a.class,a.score desc;
+
+
+
+
+
+
+
+
+
+
