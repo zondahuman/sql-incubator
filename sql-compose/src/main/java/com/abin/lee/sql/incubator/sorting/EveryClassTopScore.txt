@@ -36,8 +36,40 @@ order by a.class,a.score desc;
 
 
 
+mysql实现分组查询每个班级的前三名
 
+set character_set_server = utf8mb4 ;
+DROP TABLE IF EXISTS student;
 
+CREATE TABLE IF NOT EXISTS  student(
+	id varchar(20),-- 编号
+	class varchar(20),-- 年级
+	score int-- 分数
+);
+delete from student;
+insert student values('1','OneClass',82);
+insert student values('2','OneClass',95);
+insert student values('3','OneClass',82);
+insert student values('4','OneClass',40);
+insert student values('5','OneClass',20);
+insert student values('6','TwoClass',95);
+insert student values('7','TwoClass',40);
+insert student values('8','TwoClass',3);
+insert student values('9','TwoClass',60);
+insert student values('10','TwoClass',10);
+insert student values('11','ThreeClass',70);
+insert student values('12','ThreeClass',60);
+insert student values('13','ThreeClass',40);
+insert student values('14','ThreeClass',90);
+insert student values('15','ThreeClass',20);
+
+mysql实现分组查询每个班级的最高分
+select a.class,a.score from student a inner join (select max(score) as score, class as class from student group by class) b
+on a.class = b.class and a.score =b.score ;
+
+mysql实现分组查询每个班级的前三名
+select a.class,a.score from student a where (select count(*) from student where a.class=class and a.score<score)<3
+order by a.class, a.score desc;
 
 
 
