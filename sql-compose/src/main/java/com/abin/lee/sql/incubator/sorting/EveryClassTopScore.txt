@@ -1,3 +1,4 @@
+mysql实现分组查询每个班级的前三名
 
 drop table student;
 create table student(
