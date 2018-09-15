@@ -1,0 +1,114 @@
+面试题：查询部门最高工资的员工信息
+难度：中等
+表Employee保存了所有的员工数据。
+
+Id	Name	Salary	DepartmentId
+1	Joe	70000	1
+2	Henry	80000	2
+3	Sam	60000	2
+4	Max	90000	1
+ 
+表Department保存了所有的部门数据。
+
+Id	Name
+1	IT
+2	Sales
+ 
+写一段SQL查找出各部门工资最高的员工信息。如上所示，IT部门工资最高的是Max，Sales部门工资最高的是Henry。
+
+Department	Employee	Salary
+IT	Max	90000
+Sales	Henry	80000
+ 
+
+
+答案一：
+SELECT D.Nameas Department, E1.Name as Employee, E1.Salary as Salary
+FROM Employee E1 join Department D
+WHERE E1.DepartmentId = D.Id and E1.Salary >= (SELECT MAX(Salary) from Employee E2 WHERE E1.DepartmentId = E2.DepartmentId);
+
+答案二：
+SELECT b.Nameas Department,a.nameas Employee, a.Salaryas Salary
+FROM Employee a, Department b, (select max(Salary) as Salary, DepartmentId from Employee group by DepartmentId) c
+WHERE a.DepartmentId = b.Id and a.Salary = c.Salary and a.DepartmentId = c.DepartmentId
+
+
+
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (1, `JOHN`,  1, 3000.00);
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (2, `PAUL`,  1, 3500.00);
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (3, `JAMES`, 1, 4000.00);
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (4, `KOBE`,  1, 4500.00);
+
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (5, `JIMMY`, 2, 6000.00);
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (6, `DOM`, 2, 8000.00);
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (7, `STONE`, 2, 9000.00);
+INSERT INTO `Employee`(`id`, `Name`, `dept_id`, `salary`) VALUES (8, `SILVA`, 2, 10000.00);
+
+INSERT INTO `dept`(`id`, `name`) VALUES (1, 'dev');
+INSERT INTO `dept`(`id`, `name`) VALUES (2, 'op');
+
+
+
+select e1.dept_id,d.name,e1.salary
+    from employee e1
+    left join dept d on e1.dept_id=d.id
+where
+   (
+    select count(1)
+    from employee e2
+    where e2.dept_id=e1.dept_id and e2.salary>=e1.salary
+   ) <=3 /*这里的数值表示你想取前几名*/
+
+order by dept_id, salary desc;
+
+
+SELECT
+	e1.dept_id,
+	d.NAME,
+	e1.salary
+FROM
+	employee e1
+	LEFT JOIN dept d ON e1.dept_id = d.id
+WHERE
+	( SELECT count( 1 ) FROM employee e2 WHERE e2.dept_id = e1.dept_id AND e2.salary >= e1.salary ) <= 3 /*这里的数值表示你想取前几名*/
+
+ORDER BY
+	dept_id,
+	salary DESC;
+
+
+SELECT
+	a.id,
+	a.dept_id,
+	a.salary
+FROM
+	employee a
+	LEFT JOIN employee b ON a.dept_id = b.dept_id
+	AND a.salary < b.salary
+GROUP BY
+	a.id,
+	a.dept_id,
+	a.salary
+HAVING
+	count( b.id ) < 3
+ORDER BY
+	a.dept_id,
+	a.salary;
+
+
+https://segmentfault.com/q/1010000002613925
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
